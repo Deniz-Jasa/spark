@@ -39,7 +39,7 @@ const DashboardLayout = ({ children }) => {
 					bottom: 0,
 				}}>
 				<div className="demo-logo-vertical" />
-				<Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]} items={items} />
+				<Menu mode="inline" defaultSelectedKeys={["4"]} items={items} />
 				<DynamicSwitch
 					pathName={pathName}
 					redirect={(path) => {

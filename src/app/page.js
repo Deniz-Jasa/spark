@@ -7,24 +7,31 @@ import { Button } from "antd";
 
 // pages/index.js
 import { useMutation, useQuery } from "convex/react";
-import { api } from "../../convex/_generated/api";
+import { internal } from "../../convex/_generated/api";
 
 /**
  * Contributor Home/Discover Page
  * @returns React.Component
  */
-const HomePage = () => {
-	const allOrgs = useQuery(api.organizations.getAllOrgs);
-	const allCampaigns = useQuery(api.monetaryCampaigns.getAllMonCamps);
+/*
+const getData = async () => {
+	const res = await fetch("https://upbeat-spaniel-750.convex.site/fetchOrgPageInfo");
 
-	const postNewOrg = useMutation(api.organizations.postNewOrg);
-	const postOrgCampaign = useMutation(api.organizations.postOrgCampaign);
+	if (!res.ok) {
+		// This will activate the closest `error.js` Error Boundary
+		throw new Error("Failed to fetch data");
+	}
 
+	return res.json();
+};*/
+
+export default async function HomePage() {
+	/*const data = await getData();
+
+	console.log(data);*/
 	return (
 		<div>
 			<h1 style={{ color: "black" }}></h1>
 		</div>
 	);
-};
-
-export default HomePage;
+}

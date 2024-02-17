@@ -20,23 +20,30 @@ export default function RootLayout({ children }) {
 			<link rel="apple-touch-icon" href="/apple-icon?<generated>" type="image/<generated>" sizes="<generated>" />
 
 			<body className={inter.className}>
-				<ConfigProvider
-					theme={{
-						token: {
-							// Seed Token
-							colorPrimary: "#FF8947",
-							borderRadius: 2,
-
-							// Alias Token
-							colorBgContainer: "#FF8947",
-						},
-					}}></ConfigProvider>
 				<AntdRegistry>
 					<ConvexClientProvider>
 						{/* If user */}
-						<DashboardLayout>{children}</DashboardLayout>
-						{/* If not user */}
-						{/* <LandingLayout>{Children}</LandingLayout>*/}
+						<ConfigProvider
+							theme={{
+								token: {
+									colorWarning: "#f8c058",
+									colorError: "#7e0018",
+									colorPrimary: "#ff8947",
+									colorInfo: "#ff8947",
+								},
+								components: {
+									Menu: {
+										colorBgContainer: "transparent",
+									},
+									Layout: {
+										siderBg: "#ff8947",
+									},
+								},
+							}}>
+							<DashboardLayout>{children}</DashboardLayout>
+							{/* If not user */}
+							{/* <LandingLayout>{Children}</LandingLayout>*/}
+						</ConfigProvider>
 					</ConvexClientProvider>
 				</AntdRegistry>
 			</body>
