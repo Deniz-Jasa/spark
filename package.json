@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "ant-design": "^1.0.0",
+    "@ant-design/nextjs-registry": "^1.0.0",
     "antd": "^5.14.1",
     "convex": "^1.9.0",
     "next": "14.1.0",
