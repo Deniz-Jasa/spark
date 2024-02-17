@@ -1,12 +1,15 @@
 "use client";
 
 import React from "react";
-
-import { useMutation, useQuery } from "convex/react";
+import { useAction } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 
-const Organization = () => {
+const Organization = async () => {
 	//document.title = "My Organization | Spark";
+	const data = await useAction(api.organizations.fetchOrgPageInfo)();
+
+	console.log(data)
+
 	return (
 		<>
 			<h1 style={{ color: "black" }}>My Organization</h1>

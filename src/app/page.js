@@ -6,32 +6,23 @@ import React from "react";
 import { Button } from "antd";
 
 // pages/index.js
-import { useMutation, useQuery } from "convex/react";
-import { internal } from "../../convex/_generated/api";
+import { useAction, useMutation, useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
 
 /**
  * Contributor Home/Discover Page
  * @returns React.Component
  */
-/*
-const getData = async () => {
-	const res = await fetch("https://upbeat-spaniel-750.convex.site/fetchOrgPageInfo");
 
-	if (!res.ok) {
-		// This will activate the closest `error.js` Error Boundary
-		throw new Error("Failed to fetch data");
-	}
+const HomePage = async () => {
+	const data = await useQuery(api.monetaryCampaigns.getAllMonCamps);
+	console.log(data)
 
-	return res.json();
-};*/
-
-export default async function HomePage() {
-	/*const data = await getData();
-
-	console.log(data);*/
 	return (
 		<div>
 			<h1 style={{ color: "black" }}></h1>
 		</div>
 	);
 }
+
+export default HomePage;

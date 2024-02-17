@@ -4,6 +4,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import ConvexClientProvider from "./ConvexClientProvider";
 import DashboardLayout from "@/components/DashboardLayout";
 import { ConfigProvider } from "antd";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 const urbanist = Urbanist({ subsets: ["latin"] });
@@ -40,7 +41,10 @@ export default function RootLayout({ children }) {
 									},
 								},
 							}}>
-							<DashboardLayout>{children}</DashboardLayout>
+							<DashboardLayout>
+								<Suspense>
+								{children}
+								</Suspense></DashboardLayout>
 							{/* If not user */}
 							{/* <LandingLayout>{Children}</LandingLayout>*/}
 						</ConfigProvider>
