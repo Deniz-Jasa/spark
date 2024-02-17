@@ -1,3 +1,5 @@
+"use client";
+
 // import Image from "next/image";
 // import styles from "./page.module.css";
 import React from "react";
@@ -6,7 +8,7 @@ import Sidebar from "@/components/Sidebar";
 
 // pages/index.js
 import { useMutation, useQuery } from "convex/react";
-import { api } from "../../../../convex/_generated/api";
+import { api } from "../../convex/_generated/api";
 
 /**
  * Contributor Home/Discover Page
@@ -18,15 +20,6 @@ const HomePage = () => {
 
 	const postNewOrg = useMutation(api.organizations.postNewOrg);
 	const postOrgCampaign = useMutation(api.organizations.postOrgCampaign);
-	const t = useQuery(api.monetaryCampaigns.getMonCampsByIds, {
-		campIds: [
-			"j5788c49vagpymvtmppg3gcey56knvb6",
-			"j57anb4bqw8jtcb8fbymyz5r596km0f1",
-			"j5752p5txdatrjk4ffkebgxj4n6kmgyn",
-			"j57cftkr09v41e20vt2g68ax0x6kmamf",
-		],
-	});
-	console.log(t);
 
 	return (
 		<div>
