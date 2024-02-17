@@ -26,12 +26,16 @@ export default function RootLayout({ children }) {
 						<ConfigProvider
 							theme={{
 								token: {
+									backgroundColor: "white",
 									colorWarning: "#f8c058",
 									colorError: "#7e0018",
-									colorPrimary: "#ff8947",
+									colorPrimaryActive: "#ffa970",
 									colorInfo: "#ff8947",
 								},
 								components: {
+									Switch: {
+										colorBg: "transparent",
+									},
 									Menu: {
 										colorBgContainer: "transparent",
 									},

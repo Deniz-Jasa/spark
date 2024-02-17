@@ -25,13 +25,13 @@ const getData = async () => {
 	return res.json();
 };*/
 
-export default async function HomePage() {
+export default function HomePage() {
 	/*const data = await getData();
 
 	console.log(data);*/
 	return (
 		<div>
-			<h1 style={{ color: "black" }}></h1>
+			<h1 style={{ color: "black" }}>My Feed</h1>
 		</div>
 	);
 }
