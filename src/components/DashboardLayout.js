@@ -45,6 +45,7 @@ const DashboardLayout = ({ children }) => {
 			<Layout
 				style={{
 					marginLeft: 200,
+					height: "100vh",
 				}}>
 				<DynamicHeader
 					pathName={pathName}
