@@ -5,8 +5,20 @@ import Link from 'next/link';
 
 const Sidebar = () => {
   return (
-    <div >
-      <h1 style={{color:'black'}}>YO</h1>
+    <div>
+      <h2>Menu</h2>
+      <ul>
+        <li>
+          <Link href="/">
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link href="/about">
+            About
+          </Link>
+        </li>
+      </ul>
     </div>
   );
 };

@@ -1,13 +1,9 @@
-// pages/_app.js
-import '../app/globals.css'; // Import global styles
-
-function MyApp({ Component, pageProps }) {
-  // This component will wrap every page in your application
+import Layout from '../app/layout'
+ 
+export default function MyApp({ Component, pageProps }) {
   return (
-    <div>
-      <Component {...pageProps} /> {/* Render the current page component */}
-    </div>
-  );
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  )
 }
-
-export default MyApp;
