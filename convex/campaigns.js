@@ -3,7 +3,7 @@ import { v } from "convex/values";
 
 const getAllMonCamps = query({
 	args: {},
-	handler: async (ctx) => await ctx.db.query("monetaryCampaigns").collect(),
+	handler: async (ctx) => await ctx.db.query("campaigns").collect(),
 });
 
 const getMonCampsByIds = query({
@@ -15,7 +15,7 @@ const getMonCampByTitle = query({
 	args: { campTitle: v.string() },
 	handler: async (ctx, args) =>
 		await ctx.db
-			.query("monetaryCampaigns")
+			.query("campaigns")
 			.filter((q) => q.eq(q.field("campaignTitle"), args.campTitle))
 			.unique(),
 });
