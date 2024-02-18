@@ -1,28 +1,20 @@
-import { mutation, query, internalQuery, httpAction } from "./_generated/server";
+import { mutation, query, action } from "./_generated/server";
+import { api } from "./_generated/api";
 import { v } from "convex/values";
 
-const getAllOrgs = internalQuery({
+const getAllOrgs = query({
 	args: {},
 	handler: async (ctx) => await ctx.db.query("organizations").collect(),
 });
 
-const fetchOrgPageInfo = httpAction(async (ctx, req) => {
-	const orgs = await ctx.runQuery(internal.organizations.getAllOrgs, {});
-	const campaigns = await ctx.runQuery(internal.monetaryCampaigns.getAllMonCamps, {});
+const fetchOrgPageInfo = action({
+    args: {},
+    handler: async (ctx, req) => {
+	const orgs = await ctx.runQuery(api.organizations.getAllOrgs, {});
+	const campaigns = await ctx.runQuery(api.monetaryCampaigns.getAllMonCamps, {});
 
-	return new Response(
-		{
-			orgs,
-			campaigns,
-		},
-		{
-			status: 200,
-			headers: new Headers({
-				"Access-Control-Allow-Origin": "http://localhost:3000",
-				Vary: "origin",
-			}),
-		}
-	);
+	return {orgs, campaigns}
+    }
 });
 
 const getOrgByName = query({

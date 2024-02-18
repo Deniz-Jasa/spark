@@ -1,13 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
+import { useAction } from "convex/react";
 
 import { Card, Row, Col, Collapse, Space, Flex } from "antd";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 
-const Organization = () => {
+const Organization = async () => {
 	//document.title = "My Organization | Spark";
+	const data = await useAction(api.organizations.fetchOrgPageInfo)();
+
+	console.log(data)
 	const text = `A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.`;
 	const items = [
 		{

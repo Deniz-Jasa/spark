@@ -1,7 +1,7 @@
-import { mutation, query, internalQuery } from "./_generated/server";
+import { query } from "./_generated/server";
 import { v } from "convex/values";
 
-const getAllMonCamps = internalQuery({
+const getAllMonCamps = query({
 	args: {},
 	handler: async (ctx) => await ctx.db.query("monetaryCampaigns").collect(),
 });
