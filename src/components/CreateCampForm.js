@@ -5,26 +5,26 @@ import { Form, Input, Button, DatePicker, Select } from "antd";
 const selectTypes = [
 	{
 		key: 1,
-		value: 'donation',
-		label: 'Donation',
+		value: "donation",
+		label: "Donation",
 	},
 	{
 		key: 2,
-		value: 'volunteering',
-		label: 'Volunteering',
+		value: "volunteering",
+		label: "Volunteering",
 	},
 	{
 		key: 3,
-		value: 'material',
-		label: 'Material',
+		value: "material",
+		label: "Material",
 	},
-]
+];
 
 const onFinishFailed = (errorInfo) => {
 	console.log("Failed:", errorInfo);
 };
 
-const CreateCampForm = ({activeOrg, onFinish}) => {
+const CreateCampForm = ({ onFinish }) => {
 	return (
 		<Form
 			name="basic"
@@ -41,7 +41,7 @@ const CreateCampForm = ({activeOrg, onFinish}) => {
 			onFinishFailed={onFinishFailed}>
 			<Form.Item
 				label="Title"
-                name="campaignTitle"
+				name="campaignTitle"
 				rules={[
 					{
 						required: true,
@@ -52,7 +52,7 @@ const CreateCampForm = ({activeOrg, onFinish}) => {
 			</Form.Item>
 			<Form.Item
 				label="Description"
-                name="description"
+				name="description"
 				rules={[
 					{
 						required: true,
@@ -63,16 +63,14 @@ const CreateCampForm = ({activeOrg, onFinish}) => {
 			</Form.Item>
 			<Form.Item
 				label="Campaign Type"
-                name="type"
+				name="type"
 				rules={[
 					{
 						required: false,
 						message: "Please input a website or social media link!",
 					},
 				]}>
-				<Select
-								style={{ width: 200 }}
-								options={selectTypes} />
+				<Select style={{ width: 200 }} options={selectTypes} />
 			</Form.Item>
 			<Form.Item
 				label="Date"
@@ -83,7 +81,7 @@ const CreateCampForm = ({activeOrg, onFinish}) => {
 						message: "Please input a date!",
 					},
 				]}>
-					<DatePicker />
+				<DatePicker />
 			</Form.Item>
 			<Form.Item
 				label="Goal Amount"
@@ -96,10 +94,7 @@ const CreateCampForm = ({activeOrg, onFinish}) => {
 				]}>
 				<Input />
 			</Form.Item>
-			<Form.Item
-				label="Location"
-				name="location"
-				>
+			<Form.Item label="Location" name="location">
 				<Input />
 			</Form.Item>
 			<Button justify="flex-end" type="primary" htmlType="submit">

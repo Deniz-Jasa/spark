@@ -27,6 +27,7 @@ export default function RootLayout({ children }) {
 						<ConfigProvider
 							theme={{
 								token: {
+									fontFamily: "Inter, sans-serif",
 									colorBg: "white",
 									colorWarning: "#f8c058",
 									colorError: "#7e0018",

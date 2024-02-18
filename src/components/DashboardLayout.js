@@ -2,8 +2,10 @@
 
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Layout, theme } from "antd";
+import Image from "next/image";
+import { Layout, theme, Menu } from "antd";
 import { DynamicSwitch } from "@/components/utils";
+import logo from "../../public/spark-logo-white.svg";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -21,21 +23,39 @@ const DashboardLayout = ({ children }) => {
 					overflow: "auto",
 					height: "100vh",
 					position: "fixed",
+					textAlign: "center",
 					left: 0,
 					bottom: 0, // Updated to bottom
 				}}>
-				<h1 style={{ textAlign: "center", marginTop: "40px" }}>Spark</h1>
-
-				<div style={{ marginTop: "auto", display: "flex", alignItems: "center" }}>
+				<div style={{ marginTop: "10%" }}>
 					<DynamicSwitch
 						pathName={pathName}
 						redirect={(path) => {
 							router.push(path);
 						}}
 					/>
-					<div style={{ display: "flex", alignItems: "center" }}>
-						<p>Company View</p>
-					</div>
+					<p>Company View</p>
+				</div>
+				<Menu
+					mode="inline"
+					defaultSelectedKeys={["1"]}
+					defaultOpenKeys={["sub1"]}
+					style={{
+						textAlign: "center",
+						background: "transparent",
+						marginTop: "10%",
+						borderRight: 0,
+					}}
+					items={[
+						{ key: "1", label: "Discover" },
+						{ key: "2", label: "Favorites" },
+						{ key: "3", label: "My Contributions" },
+					]}
+				/>
+				<div style={{ marginTop: "150%" }}>
+					<h1 style={{ fontSize: "2em" }}>100</h1>
+					<h1>Spark Points</h1>
+					<Image src={logo} width={100} height={100} />
 				</div>
 			</Sider>
 

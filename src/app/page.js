@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { Card, Row, Col, Input } from "antd";
 import { GoogleMap, Marker, LoadScript, InfoWindow } from '@react-google-maps/api';
 import { mockData } from './mockdata';
@@ -47,7 +47,7 @@ const getTypeStyles = (type) => {
 
 const HomePage = () => {
 	const allCamps = useQuery(api.campaigns.getAllMonCamps);
-	const [filteredData, setFilteredData] = useState(mockData);
+	const [filteredData, setFilteredData] = useState(null);
 	const [selectedItem, setSelectedItem] = useState(null);
 
 	const onMarkerClick = (item) => {
@@ -60,12 +60,10 @@ const HomePage = () => {
 
 	const handleSearch = (value) => {
 		const lowerCaseValue = value.toLowerCase();
-		const filtered = mockData.filter(item =>
-			item.title.toLowerCase().includes(lowerCaseValue) ||
+		const filtered = allCamps.filter(item =>
+			item.campaignTitle.toLowerCase().includes(lowerCaseValue) ||
 			item.description.toLowerCase().includes(lowerCaseValue) || 
-			item.type.toLowerCase().includes(lowerCaseValue) ||
-			item.location.toLowerCase().includes(lowerCaseValue)
-		);
+			item.goal.type.toLowerCase().includes(lowerCaseValue)		);
 		setFilteredData(filtered);
 	};	
 
@@ -85,7 +83,14 @@ const HomePage = () => {
 		console.log(route)
         redirect(route);
     };
-	console.log(allCamps)
+
+	useEffect(() => {
+		console.log(filteredData, allCamps)
+		if (!filteredData && !!allCamps) {
+			setFilteredData(allCamps);
+		}
+	}, [allCamps]);
+	console.log(filteredData)
 
 	return (
 		<div style={{ padding: "20px", height: "calc(100vh - 160px)", overflowY: "auto" }}>
@@ -106,20 +111,20 @@ const HomePage = () => {
 						gestureHandling: "cooperative" // Set gestureHandling to "cooperative"
 					}}
 				>
-					{filteredData.map(item => (
+					{!!filteredData && filteredData.map(item => (
 						<Marker
 							key={item.id}
-							position={{ lat: item.lat, lng: item.lng }}
+							position={{ lat: item?.lat, lng: item?.lng }}
 							onClick={() => onMarkerClick(item)}
 						>
 							{selectedItem === item && (
 								<InfoWindow onCloseClick={closeModal} options={{ maxWidth: 300 }} >
 									<div>
-										<h3 style={{ color: 'black' }}>{item.title}</h3>
+										<h3 style={{ color: 'black' }}>{item.campaignTitle}</h3>
 										<br></br>
 										<p style={{ color: 'black' }}>{item.description}</p>
 										<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px' }}>
-											<p style={{ ...getTypeStyles(item.type), paddingLeft: '8px', paddingRight: '8px', borderRadius: '4px', marginRight: '8px' }}>{item.type}</p>
+											<p style={{ ...getTypeStyles(item.goal.type), paddingLeft: '8px', paddingRight: '8px', borderRadius: '4px', marginRight: '8px' }}>{item.goal.type}</p>
 											<button style={{ backgroundColor: '#ff8947', border: 'none', padding: '8px 16px', borderRadius: '4px' }}>Learn More</button>
 										</div>
 									</div>
@@ -132,7 +137,7 @@ const HomePage = () => {
 
 			<div style={{ marginBottom: '30px', marginTop: '30px' }}>
 				<Row gutter={[16, 16]}>
-					{!!allCamps && allCamps.map(item => (
+					{!!filteredData && filteredData.map(item => (
 						<Col key={item._id} span={8} padding={8}>
 							<Card
 								hoverable
@@ -141,7 +146,7 @@ const HomePage = () => {
 								{item.location && <p style={{marginTop: '30px', color:'#8C8C8C'}}><span style={{fontWeight:'bold'}}>Location:</span> {item.location}</p>}
 
 								<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px' }}>
-									<p style={{ ...getTypeStyles(item.type), paddingLeft: '8px', paddingRight: '8px', borderRadius: '4px', marginRight: '8px' }}>{item.type}</p>
+									<p style={{ ...getTypeStyles(item.goal.type), paddingLeft: '8px', paddingRight: '8px', borderRadius: '4px', marginRight: '8px' }}>{item.type}</p>
 									<button style={{ backgroundColor: '#ff8947', border: 'none', padding: '8px 16px', borderRadius: '4px' }}>Learn More</button>
 								</div>
 

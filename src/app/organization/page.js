@@ -59,8 +59,8 @@ const aggregateContributions = (camps) =>
 		.map((camp) => camp.contributions)
 		.flat()
 		.map((contribution, index) => (
-			<div key={index + contribution?[].amount}>
-				<h3></h3>+ {contribution?[].amount}
+			<div key={index + contribution?.amount}>
+				<h3></h3>+ {contribution?.amount}
 			</div>
 		));
 
@@ -100,7 +100,8 @@ const Organization = () => {
 	const fetchOrg = useAction(api.organizations.getOrgById);
 
 	const finishOrgForm = async (values) => {
-		await postNewOrg({...values, campaigns: []})
+		await postNewOrg({...values, campaigns: []});
+		setOpenOrg(false);
 	}
 	const finishCampForm = async (values) => {
 		await postNewCampaign({
@@ -108,12 +109,14 @@ const Organization = () => {
 			description: values.description,
 			organizationID: activeOrg._id,
 			location: !values.location ? null : values.location,
+			contributions: [],
 			goal: {
 				type: values.type,
 				goalAmount: values.goalAmount,
 				goalDate: (new Date(values.goalDate)).getTime()
 			}
-		})
+		});
+		setOpenCamp(false);
 	}
 
 	useEffect(() => {
