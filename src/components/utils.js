@@ -1,14 +1,6 @@
 import { Layout, Menu, theme, Switch } from "antd";
 const { Header, Content, Footer, Sider } = Layout;
 
-const DynamicHeader = ({ pathName, style }) => {
-	return pathName == "/" ? (
-		<Header style={style}>
-			<h1>Explore</h1>
-		</Header>
-	) : null;
-};
-
 const DynamicSwitch = ({ pathName, redirect }) => {
 	return (
 		<Switch
@@ -24,4 +16,4 @@ const DynamicSwitch = ({ pathName, redirect }) => {
 	);
 };
 
-export { DynamicHeader, DynamicSwitch };
+export { DynamicSwitch };
