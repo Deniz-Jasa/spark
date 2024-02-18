@@ -133,7 +133,7 @@ const HomePage = () => {
 			<p style={{ color: "#929292", textAlign: 'left', marginBottom: '40px' }}>Discover sustainable ways to support local business and non-profit organizations (NPOs) through eco-friendly practices like in-kind donations, financial contributions, and volunteer efforts, fostering positive change in your community.</p>
 			<Search placeholder="Search..." onSearch={onSearch} style={{ width: '100%', marginBottom: '20px' }} />
 			<LoadScript
-				googleMapsApiKey="AIzaSyCCu4rPIMPW37A12h15LdaEUic9o79SVAc"
+				googleMapsApiKey="shhhh its a secret bro"
 			>
 				<GoogleMap
 					mapContainerStyle={containerStyle}
