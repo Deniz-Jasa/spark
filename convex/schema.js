@@ -4,31 +4,28 @@ import { v } from "convex/values";
 const organizationsSchema = {
     organizations: defineTable({
         name: v.string(),
+        bio: v.string(),
         websiteURL: v.string(),
-        monetaryCampaigns: v.optional(v.array(
-            v.object({
-                goal: v.number(),
-                assignee: v.optional(v.string())
-            }),
-        )),
-        volunteerCampaigns: v.optional(v.array(
-            v.object({
-                need: v.string(),
-                assignee: v.optional(v.string())
-            })
-        ))
+        campaigns: v.array(
+            v.id('organizations')
+        ),
     })
 }
 
-const monetaryCampaignsSchema = {
-    monetaryCampaigns: defineTable({
+const campaignsSchema = {
+    campaigns: defineTable({
         campaignTitle: v.string(),
         organizationID: v.id('organizations'),
-        goalDate: v.number(),
-        goalNumber: v.number(),
+        goal: v.object({
+            type: v.union(v.literal('volunteering'), v.literal('material'), v.literal('donation')),
+            materialRequested: v.optional(v.string()),
+            goalAmount: v.number(),
+            goalDate: v.number(),
+        }),
         contributions: v.array(
             v.object({
-                amount: v.number()
+                amount: v.number(),
+                contributer: v.optional(v.string()),
             })
         )
     })
@@ -36,5 +33,5 @@ const monetaryCampaignsSchema = {
 
 export default defineSchema({
     ...organizationsSchema,
-    ...monetaryCampaignsSchema
+    ...campaignsSchema
 });

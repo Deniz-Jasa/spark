@@ -14,8 +14,8 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as campaigns from "../campaigns.js";
 import type * as http from "../http.js";
-import type * as monetaryCampaigns from "../monetaryCampaigns.js";
 import type * as organizations from "../organizations.js";
 import type * as schema from "../schema.js";
 
@@ -28,8 +28,8 @@ import type * as schema from "../schema.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  campaigns: typeof campaigns;
   http: typeof http;
-  monetaryCampaigns: typeof monetaryCampaigns;
   organizations: typeof organizations;
   schema: typeof schema;
 }>;

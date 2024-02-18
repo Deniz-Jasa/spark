@@ -1,62 +1,178 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAction } from "convex/react";
 
-import { Card, Row, Col, Collapse, Space, Flex } from "antd";
+import { Card, Row, Col, Collapse, Select, Button, Modal } from "antd";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
+import CreateOrgForm from "@/components/CreateOrgForm";
+import CreateCampForm from "@/components/CreateCampForm";
+import { CAMPAIGN_TYPES } from "@/components/utils";
 
-const Organization = async () => {
-	//document.title = "My Organization | Spark";
-	const data = await useAction(api.organizations.fetchOrgPageInfo)();
+function convertIntToCash(int) {
+	// Add commas as thousands separators.
+	const parts = int.toString().split(".");
+	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-	console.log(data)
-	const text = `A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.`;
-	const items = [
-		{
-			key: "1",
-			label: "This is panel header 1",
-			children: <p>{text}</p>,
-		},
-		{
-			key: "2",
-			label: "This is panel header 2",
-			children: <p>{text}</p>,
-		},
-		{
-			key: "3",
-			label: "This is panel header 3",
-			children: <p>{text}</p>,
-		},
-	];
+	// Add the currency symbol.
+	parts[1] = parts[1] || "00";
+	return parts.join(".");
+}
+const orgSelectOptions = (orgs) =>
+	orgs.map((org) => ({
+		label: org.name,
+		value: org._id,
+		key: org._id,
+	}));
+
+const makeCampaignSections = (camps) =>
+	camps.map((camp, index) => ({
+		key: index,
+		label: camp.campaignTitle,
+		children: (
+			<Row>
+				<Col flex="1">
+					<p>Campaign Type: {camp.goal.type.charAt(0).toUpperCase() + camp.goal.type.slice(1)}</p>
+				</Col>
+				{camp.goal?.materialRequested && (
+					<Col flex="1">
+						<p>Material Requested: {camp.goal.materialRequested}</p>
+					</Col>
+				)}
+				<Col flex="1">
+					<p>
+						Goal Amount:{" "}
+						{camp.goal.type == CAMPAIGN_TYPES.DONATION
+							? "$" + convertIntToCash(camp.goal.goalAmount)
+							: camp.goal.goalAmount + " " + camp.goal.type + "(s)"}
+					</p>
+				</Col>
+				<Col flex="1">
+					<p>Goal Date: {new Date(camp.goal.goalDate).toLocaleDateString()}</p>
+				</Col>
+			</Row>
+		),
+	}));
+
+const aggregateContributions = (camps) =>
+	camps
+		.map((camp) => camp.contributions)
+		.flat()
+		.map((contribution, index) => (
+			<div key={index + contribution.amount}>
+				<h3></h3>+ {contribution.amount}
+			</div>
+		));
+
+const Organization = () => {
+	const [activeOrg, setActiveOrg] = useState(null);
+	const [campaigns, setCampaigns] = useState(null);
+	const [data, setData] = useState(null);
+
+	/* Modal Forms */
+	const [openOrg, setOpenOrg] = useState(false);
+	const [openCamp, setOpenCamp] = useState(false);
+
+	const ORG_ID = "org";
+	const CAMP_ID = "camp";
+
+	const showModal = (id, state) => {
+		switch (id) {
+			case ORG_ID:
+				setOpenOrg(state);
+				break;
+			case CAMP_ID:
+				setOpenCamp(state);
+				break;
+			default:
+				console.log("Invalid Form ID");
+				break;
+		}
+	};
+
+	/* API Fetch */
+	const fetchData = useAction(api.organizations.fetchOrgPageInfo);
+	const fetchOrg = useAction(api.organizations.getOrgById);
+
+	useEffect(() => {
+		console.log("ret");
+		const call = async () => {
+			if (!activeOrg || !campaigns) {
+				const data1 = await fetchData();
+
+				setData(data1);
+			}
+		};
+		call();
+	}, []);
 
 	return (
-		<Row gutter={16} style={{ height: "100%" }}>
-			<Col span={18}>
-				<Col>
-					<Card>
-						<h2 style={{ color: "black" }}>{"Organization Name"}</h2>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-							labore et dolore magna aliqua. Ut enim ad minim veniam,{" "}
-						</p>
+		<>
+			<Row gutter={16} style={{ height: "100%" }}>
+				<Col span={18}>
+					<Col>
+						<Card>
+							<Select
+								onChange={async (value) => {
+									const org = await fetchOrg({ orgId: value });
+									setActiveOrg(org);
+									setCampaigns(
+										data?.campaigns.filter((campaign) => org._id == campaign.organizationID)
+									);
+								}}
+								style={{ width: 200 }}
+								defaultValue={activeOrg?._id ?? "Select an Organization"}
+								options={!!data ? orgSelectOptions(data.orgs) : []}
+							/>
+						</Card>
+					</Col>
+					<Col>
+						<Collapse
+							style={{ margin: "10px 0" }}
+							items={!!campaigns ? makeCampaignSections(campaigns) : []}
+							accordion={true}
+						/>
+					</Col>
+					<Col>
+						<Card>
+							<Button
+								type="primary"
+								style={{ margin: "0 10px" }}
+								onClick={() => showModal(CAMP_ID, true)}>
+								Create Campaign
+							</Button>
+							<Button type="primary" style={{ margin: "0 10px" }} onClick={() => showModal(ORG_ID, true)}>
+								Create Organization
+							</Button>
+						</Card>
+					</Col>
+				</Col>
+				<Col span={6}>
+					<Card title={<h3>Contributions</h3>} style={{ height: "100%" }}>
+						<h2 style={{ color: "#52c41a", fontWeight: "bold" }}>
+							{!!campaigns ? aggregateContributions(campaigns) : []}
+						</h2>
 					</Card>
 				</Col>
-				<Col style={{ height: "100%" }}>
-					<Collapse items={items} accordion={true} />;
-				</Col>
-			</Col>
-			<Col span={6}>
-				<Card title={<h3>Contributions</h3>} style={{ height: "100%" }}>
-					<h2 style={{ color: "black" }}>{"Organization Name"}</h2>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore magna aliqua. Ut enim ad minim veniam,{" "}
-					</p>
-				</Card>
-			</Col>
-		</Row>
+			</Row>
+			<Modal
+				title="Create Campaign"
+				width={750}
+				open={openCamp}
+				onCancel={() => showModal(CAMP_ID, false)}
+				footer={null}>
+				<CreateCampForm />
+			</Modal>
+			<Modal
+				title="Create Organization"
+				width={750}
+				open={openOrg}
+				onCancel={() => showModal(ORG_ID, false)}
+				footer={null}>
+				<CreateOrgForm />
+			</Modal>
+		</>
 	);
 };
 
