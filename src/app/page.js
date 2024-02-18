@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Card, Row, Col, Input } from "antd";
 import { GoogleMap, Marker, LoadScript, InfoWindow } from '@react-google-maps/api';
 import { mockData } from './mockdata';
+import { redirect } from 'next/dist/server/api-utils';
 
 const { Search } = Input;
 const { Meta } = Card;
@@ -76,6 +77,10 @@ const HomePage = () => {
 		setMap(null);
 	}, []);
 
+	const handleCardClick = (res, id) => {
+        redirect(res, '/viewOrg?id=' + id);
+    };
+
 	return (
 		<div style={{ padding: "20px", height: "calc(100vh - 160px)", overflowY: "auto" }}>
 			<h1 style={{ color: "#1E1E1E", textAlign: 'left', marginBottom: '20px' }}>Discover</h1>
@@ -126,10 +131,12 @@ const HomePage = () => {
 							<Card
 								hoverable
 								cover={<img alt="example" src={item.imageUrl} />}
+								onClick={() => handleCardClick(item.id)}
 							>
 								<Meta title={item.title} description={item.description} />
+								<p style={{marginTop: '30px', color:'#8C8C8C'}}><span style={{fontWeight:'bold'}}>Location:</span> {item.location}</p>
 
-								<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '40px' }}>
+								<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px' }}>
 									<p style={{ ...getTypeStyles(item.type), paddingLeft: '8px', paddingRight: '8px', borderRadius: '4px', marginRight: '8px' }}>{item.type}</p>
 									<button style={{ backgroundColor: '#ff8947', border: 'none', padding: '8px 16px', borderRadius: '4px' }}>Learn More</button>
 								</div>
