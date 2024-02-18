@@ -4,8 +4,9 @@ import { Card, Row, Col, Input } from "antd";
 import { GoogleMap, Marker, LoadScript, InfoWindow } from '@react-google-maps/api';
 import { mockData } from './mockdata';
 import { redirect } from 'next/navigation';
-import { useQuery } from 'convex/react';
+import { useAction, useQuery } from 'convex/react';
 import { api } from "../../convex/_generated/api";
+import { navigate } from "@/components/serverActions";
 
 const { Search } = Input;
 const { Meta } = Card;
@@ -27,7 +28,7 @@ const getTypeStyles = (type) => {
 				backgroundColor: '#FFF0F0', // Dark red
 				color: '#A63737'
 			};
-		case 'volunteers':
+		case 'volunteering':
 			return {
 				backgroundColor: '#F0F8FF', // Light blue
 				color: '#1664B1' // Dark blue
@@ -49,6 +50,8 @@ const HomePage = () => {
 	const allCamps = useQuery(api.campaigns.getAllMonCamps);
 	const [filteredData, setFilteredData] = useState(null);
 	const [selectedItem, setSelectedItem] = useState(null);
+
+	const getOrg = useAction(api.organizations.getOrgById);
 
 	const onMarkerClick = (item) => {
 		setSelectedItem(item);
@@ -142,12 +145,27 @@ const HomePage = () => {
 							<Card
 								hoverable
 								onClick={() => handleCardClick(item._id)}>
-								<Meta title={item.campaignTitle} description={item.description} />
-								{item.location && <p style={{marginTop: '30px', color:'#8C8C8C'}}><span style={{fontWeight:'bold'}}>Location:</span> {item.location}</p>}
+								<Meta title={
+									<div>
+										<h3 style={{textAlign: 'left', marginBottom: '4px'}}>
+											{item.campaignTitle}
+										</h3>
+										<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px'}}>
+											<h5 style={{ color: 'gray', textAlign: 'left'}}>
+												Looking for {item.goal.goalAmount} by {(new Date(item.goal.goalDate)).toLocaleDateString()}
+											</h5>
+											<p style={{ ...getTypeStyles(item.goal.type), paddingLeft: '8px', paddingRight: '8px', borderRadius: '4px', marginRight: '8px', fontWeight: 400, fontSize: '14px'}}>{item.goal.type}</p>
+										</div>
+									</div>
+									} description={
+										<p style={{textAlign: 'left'}}>
+											{item.description}
+										</p>} />
 
-								<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px' }}>
-									<p style={{ ...getTypeStyles(item.goal.type), paddingLeft: '8px', paddingRight: '8px', borderRadius: '4px', marginRight: '8px' }}>{item.type}</p>
-									<button style={{ backgroundColor: '#ff8947', border: 'none', padding: '8px 16px', borderRadius: '4px' }}>Learn More</button>
+								<div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '30px' }}>
+									{item.location && <p style={{ color:'#8C8C8C', textAlign: 'left', flex: 1}}><span style={{fontWeight:'bold'}}>Location:</span> {item.location}</p>}
+
+									<button onClick={async() => {navigate((await getOrg({orgId: item.organizationID})).websiteURL)}} style={{ backgroundColor: '#ff8947', border: 'none', padding: '8px 16px', borderRadius: '4px' }}>Learn More</button>
 								</div>
 
 							</Card>

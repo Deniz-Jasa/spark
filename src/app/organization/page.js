@@ -9,6 +9,8 @@ import CreateOrgForm from "@/components/CreateOrgForm";
 import CreateCampForm from "@/components/CreateCampForm";
 import { CAMPAIGN_TYPES } from "@/components/utils";
 
+const { Meta } = Card;
+
 function convertIntToCash(int) {
 	// Add commas as thousands separators.
 	const parts = int.toString().split(".");
@@ -137,18 +139,22 @@ const Organization = () => {
 				<Col span={18}>
 					<Col>
 						<Card>
-							<Select
-								onChange={async (value) => {
-									const org = await fetchOrg({ orgId: value });
-									setActiveOrg(org);
-									setCampaigns(
-										data?.campaigns.filter((campaign) => org._id == campaign.organizationID)
-									);
-								}}
-								style={{ width: 200 }}
-								defaultValue={activeOrg?._id ?? "Select an Organization"}
-								options={!!data ? orgSelectOptions(data.orgs) : []}
+							<Meta
+								title={<Select
+									onChange={async (value) => {
+										const org = await fetchOrg({ orgId: value });
+										setActiveOrg(org);
+										setCampaigns(
+											data?.campaigns.filter((campaign) => org._id == campaign.organizationID)
+										);
+									}}
+									style={{ width: 200 }}
+									defaultValue={activeOrg?._id ?? "Select an Organization"}
+									options={!!data ? orgSelectOptions(data.orgs) : []}
+								/>}
+								description={activeOrg?.bio ?? ""}
 							/>
+							
 						</Card>
 					</Col>
 					<Col>
