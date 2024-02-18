@@ -20,7 +20,7 @@ const HomePage = async () => {
 
 	return (
 		<div>
-			<h1 style={{ color: "black" }}></h1>
+			<h1 style={{ color: "black" }}>My Feed</h1>
 		</div>
 	);
 }

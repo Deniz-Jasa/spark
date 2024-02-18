@@ -1,24 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { SearchOutlined, CompassOutlined } from "@ant-design/icons";
-import { Layout, Menu, theme, Switch } from "antd";
+import { Layout, theme } from "antd";
 import { DynamicHeader, DynamicSwitch } from "@/components/utils";
 
 const { Header, Content, Footer, Sider } = Layout;
-const items = [
-	{
-		key: "1",
-		icon: <CompassOutlined />,
-		label: "Discover",
-	},
-	{
-		key: "2",
-		icon: <SearchOutlined />,
-		label: "Search",
-	},
-];
 
 const DashboardLayout = ({ children }) => {
 	const {
@@ -33,46 +20,51 @@ const DashboardLayout = ({ children }) => {
 				style={{
 					overflow: "auto",
 					height: "100vh",
+					width: "400px",
+					maxWidth: "400px",
 					position: "fixed",
 					left: 0,
-					top: 0,
-					bottom: 0,
+					bottom: 0, // Updated to bottom
 				}}>
-				<div className="demo-logo-vertical" />
-				<Menu mode="inline" defaultSelectedKeys={["4"]} items={items} />
-				<DynamicSwitch
-					pathName={pathName}
-					redirect={(path) => {
-						router.push(path);
-					}}
-				/>
+				<h1 style={{ textAlign: "center", marginTop: "40px" }}>Spark</h1>
+
+				<div style={{ marginTop: "auto", display: "flex", alignItems: "center" }}>
+					<DynamicSwitch
+						pathName={pathName}
+						redirect={(path) => {
+							router.push(path);
+						}}
+					/>
+					<div style={{ marginLeft: "6px" }}>
+						<p>NPO View</p>
+					</div>
+				</div>
 			</Sider>
+
 			<Layout
 				style={{
 					marginLeft: 200,
+					height: "100vh",
 				}}>
 				<DynamicHeader
 					pathName={pathName}
 					style={{
-						padding: 0,
+						padding: 24,
 						background: colorBgContainer,
 						color: "black",
 					}}
 				/>
 				<Content
 					style={{
-						margin: "24px 16px 0",
-						overflow: "initial",
+						margin: "24px",
+						overflow: "hidden",
+						height: "80%",
+						padding: 24,
+						textAlign: "center",
+						background: colorBgContainer,
+						borderRadius: borderRadiusLG,
 					}}>
-					<div
-						style={{
-							padding: 24,
-							textAlign: "center",
-							background: colorBgContainer,
-							borderRadius: borderRadiusLG,
-						}}>
-						{children}
-					</div>
+					{children}
 				</Content>
 				<Footer
 					style={{
