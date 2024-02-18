@@ -1,6 +1,11 @@
 import { Layout, Menu, theme, Switch } from "antd";
 const { Header, Content, Footer, Sider } = Layout;
 
+const CAMPAIGN_TYPES = {
+	DONATION: "donation",
+	VOLUNTEERING: "volunteering",
+}
+
 const DynamicHeader = ({ pathName, style }) => {
 	return pathName == "/" ? (
 		<Header style={style}>
@@ -24,4 +29,4 @@ const DynamicSwitch = ({ pathName, redirect }) => {
 	);
 };
 
-export { DynamicHeader, DynamicSwitch };
+export { DynamicHeader, DynamicSwitch, CAMPAIGN_TYPES };

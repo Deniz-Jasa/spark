@@ -30,15 +30,12 @@ export default function RootLayout({ children }) {
 									colorBg: "white",
 									colorWarning: "#f8c058",
 									colorError: "#7e0018",
-									colorPrimaryActive: "#ffa970",
+									colorPrimary: "#ff8947",
 									colorInfo: "#ff8947",
 								},
 								components: {
-									Switch: {
-										colorBg: "transparent",
-									},
 									Menu: {
-										colorBgContainer: "transparent",
+										darkItemBg: "transparent",
 									},
 									Layout: {
 										siderBg: "#ff8947",
@@ -46,9 +43,8 @@ export default function RootLayout({ children }) {
 								},
 							}}>
 							<DashboardLayout>
-								<Suspense>
 								{children}
-								</Suspense></DashboardLayout>
+							</DashboardLayout>
 							{/* If not user */}
 							{/* <LandingLayout>{Children}</LandingLayout>*/}
 						</ConfigProvider>

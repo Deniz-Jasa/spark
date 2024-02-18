@@ -105,3 +105,7 @@ a {
     color-scheme: dark;
   }
 }
+
+.ant-switch-checked {
+  background-color: #ffc09c !important;
+}

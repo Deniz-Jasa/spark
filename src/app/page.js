@@ -1,7 +1,6 @@
 "use client";
 
 // import Image from "next/image";
-// import styles from "./page.module.css";
 import React from "react";
 import { Button } from "antd";
 
@@ -14,9 +13,7 @@ import { api } from "../../convex/_generated/api";
  * @returns React.Component
  */
 
-const HomePage = async () => {
-	const data = await useQuery(api.monetaryCampaigns.getAllMonCamps);
-	console.log(data)
+const HomePage = () => {
 
 	return (
 		<div>

@@ -1,1 +1,2 @@
-{"campaignTitle": "Test Campaign","organizationID": "j578phz8wpepaa5zq8tzqydxxd6kmy8f", "goalAmount": 100000, "goalDate": 1000000000, "contributions": [{"amount": 100000}]}
+{"campaignTitle": "Red Cross Campaign","organizationID": "jd78arbfdf11exqrfwvg27n3dx6kpnsg", "goal": {"type": "monetary", "goalAmount": 12000, "goalDate": 100000000}, "contributions": [{"amount": 750, "contributer": "John Frank"}]}
+{"campaignTitle": "Red Cross Campaign 2","organizationID": "jd78arbfdf11exqrfwvg27n3dx6kpnsg", "goal": {"type": "volunteer", "goalAmount": 100, "goalDate": 100000000}, "contributions": [{"amount": 12}]}
