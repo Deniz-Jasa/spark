@@ -2,8 +2,7 @@
 
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { SearchOutlined, CompassOutlined } from "@ant-design/icons";
-import { Layout, Menu, theme, Switch } from "antd";
+import { Layout, theme } from "antd";
 import { DynamicHeader, DynamicSwitch } from "@/components/utils";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -50,25 +49,22 @@ const DashboardLayout = ({ children }) => {
 				<DynamicHeader
 					pathName={pathName}
 					style={{
-						padding: 0,
+						padding: 24,
 						background: colorBgContainer,
 						color: "black",
 					}}
 				/>
 				<Content
 					style={{
-						margin: "24px 16px 0",
-						overflow: "initial",
+						margin: "24px",
+						overflow: "hidden",
+						height: "80%",
+						padding: 24,
+						textAlign: "center",
+						background: colorBgContainer,
+						borderRadius: borderRadiusLG,
 					}}>
-					<div
-						style={{
-							padding: 24,
-							textAlign: "center",
-							background: colorBgContainer,
-							borderRadius: borderRadiusLG,
-						}}>
-						{children}
-					</div>
+					{children}
 				</Content>
 				<Footer
 					style={{
