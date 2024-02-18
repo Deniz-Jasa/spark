@@ -1,9 +1,12 @@
 import React from 'react';
-import mockdata from '../path/to/mockdata.json';
+import {mockData} from '../mockdata.js';
+import { useSearchParams } from 'next/navigation'
 
-const viewOrg = ({ id }) => {
+const viewOrg = () => {
+    const searchParams = useSearchParams()
+    const id = searchParams.get('id')
     // Find the item with the matching ID
-    const item = mockdata.find(item => item.id === parseInt(id));
+    const item = mockData.find(item => item.id === parseInt(id));
 
     // If item is not found, return a message or handle it as needed
     if (!item) {
@@ -19,15 +22,5 @@ const viewOrg = ({ id }) => {
         </div>
     );
 };
-
-export async function getServerSideProps(context) {
-    const { id } = context.query;
-
-    return {
-        props: {
-            id,
-        },
-    };
-}
 
 export default viewOrg;

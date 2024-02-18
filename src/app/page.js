@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import { Card, Row, Col, Input } from "antd";
 import { GoogleMap, Marker, LoadScript, InfoWindow } from '@react-google-maps/api';
 import { mockData } from './mockdata';
-import { redirect } from 'next/dist/server/api-utils';
+import { redirect } from 'next/navigation';
+import { useQuery } from 'convex/react';
+import { api } from "../../convex/_generated/api";
 
 const { Search } = Input;
 const { Meta } = Card;
@@ -20,7 +22,7 @@ const center = {
 
 const getTypeStyles = (type) => {
 	switch (type) {
-		case 'in-kind':
+		case 'material':
 			return {
 				backgroundColor: '#FFF0F0', // Dark red
 				color: '#A63737'
@@ -44,6 +46,7 @@ const getTypeStyles = (type) => {
 };
 
 const HomePage = () => {
+	const allCamps = useQuery(api.campaigns.getAllMonCamps);
 	const [filteredData, setFilteredData] = useState(mockData);
 	const [selectedItem, setSelectedItem] = useState(null);
 
@@ -77,9 +80,12 @@ const HomePage = () => {
 		setMap(null);
 	}, []);
 
-	const handleCardClick = (res, id) => {
-        redirect(res, '/viewOrg?id=' + id);
+	const handleCardClick = (id) => {
+		let route = '/viewOrg?id=' + id
+		console.log(route)
+        redirect(route);
     };
+	console.log(allCamps)
 
 	return (
 		<div style={{ padding: "20px", height: "calc(100vh - 160px)", overflowY: "auto" }}>
@@ -126,15 +132,13 @@ const HomePage = () => {
 
 			<div style={{ marginBottom: '30px', marginTop: '30px' }}>
 				<Row gutter={[16, 16]}>
-					{filteredData.map(item => (
-						<Col key={item.id} span={8} padding={8}>
+					{!!allCamps && allCamps.map(item => (
+						<Col key={item._id} span={8} padding={8}>
 							<Card
 								hoverable
-								cover={<img alt="example" src={item.imageUrl} />}
-								onClick={() => handleCardClick(item.id)}
-							>
-								<Meta title={item.title} description={item.description} />
-								<p style={{marginTop: '30px', color:'#8C8C8C'}}><span style={{fontWeight:'bold'}}>Location:</span> {item.location}</p>
+								onClick={() => handleCardClick(item._id)}>
+								<Meta title={item.campaignTitle} description={item.description} />
+								{item.location && <p style={{marginTop: '30px', color:'#8C8C8C'}}><span style={{fontWeight:'bold'}}>Location:</span> {item.location}</p>}
 
 								<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px' }}>
 									<p style={{ ...getTypeStyles(item.type), paddingLeft: '8px', paddingRight: '8px', borderRadius: '4px', marginRight: '8px' }}>{item.type}</p>

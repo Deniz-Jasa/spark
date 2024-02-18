@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useAction } from "convex/react";
+import { useAction, useMutation, useQuery} from "convex/react";
 
 import { Card, Row, Col, Collapse, Select, Button, Modal } from "antd";
-import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import CreateOrgForm from "@/components/CreateOrgForm";
 import CreateCampForm from "@/components/CreateCampForm";
@@ -60,8 +59,8 @@ const aggregateContributions = (camps) =>
 		.map((camp) => camp.contributions)
 		.flat()
 		.map((contribution, index) => (
-			<div key={index + contribution.amount}>
-				<h3></h3>+ {contribution.amount}
+			<div key={index + contribution?[].amount}>
+				<h3></h3>+ {contribution?[].amount}
 			</div>
 		));
 
@@ -83,7 +82,9 @@ const Organization = () => {
 				setOpenOrg(state);
 				break;
 			case CAMP_ID:
-				setOpenCamp(state);
+				if(!!activeOrg){
+					setOpenCamp(state);
+				}
 				break;
 			default:
 				console.log("Invalid Form ID");
@@ -91,9 +92,29 @@ const Organization = () => {
 		}
 	};
 
+	const postNewOrg = useMutation(api.organizations.postNewOrg)
+	const postNewCampaign = useMutation(api.organizations.postOrgCampaign)
+
 	/* API Fetch */
 	const fetchData = useAction(api.organizations.fetchOrgPageInfo);
 	const fetchOrg = useAction(api.organizations.getOrgById);
+
+	const finishOrgForm = async (values) => {
+		await postNewOrg({...values, campaigns: []})
+	}
+	const finishCampForm = async (values) => {
+		await postNewCampaign({
+			campaignTitle: values.campaignTitle,
+			description: values.description,
+			organizationID: activeOrg._id,
+			location: !values.location ? null : values.location,
+			goal: {
+				type: values.type,
+				goalAmount: values.goalAmount,
+				goalDate: (new Date(values.goalDate)).getTime()
+			}
+		})
+	}
 
 	useEffect(() => {
 		console.log("ret");
@@ -162,7 +183,7 @@ const Organization = () => {
 				open={openCamp}
 				onCancel={() => showModal(CAMP_ID, false)}
 				footer={null}>
-				<CreateCampForm />
+				<CreateCampForm activeOrg={activeOrg} onFinish={finishCampForm}/>
 			</Modal>
 			<Modal
 				title="Create Organization"
@@ -170,7 +191,7 @@ const Organization = () => {
 				open={openOrg}
 				onCancel={() => showModal(ORG_ID, false)}
 				footer={null}>
-				<CreateOrgForm />
+				<CreateOrgForm onFinish={finishOrgForm}/>
 			</Modal>
 		</>
 	);

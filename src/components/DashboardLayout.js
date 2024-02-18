@@ -2,8 +2,7 @@
 
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { SearchOutlined, CompassOutlined } from "@ant-design/icons";
-import { Layout, Menu, theme, Switch } from "antd";
+import { Layout, theme } from "antd";
 import { DynamicSwitch } from "@/components/utils";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -34,7 +33,7 @@ const DashboardLayout = ({ children }) => {
 							router.push(path);
 						}}
 					/>
-					<div style={{ marginLeft: "6px" }}>
+					<div style={{ display: "flex", alignItems: "center" }}>
 						<p>Company View</p>
 					</div>
 				</div>
