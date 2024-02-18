@@ -4,10 +4,19 @@ import { v } from "convex/values";
 const organizationsSchema = {
     organizations: defineTable({
         name: v.string(),
-        campaigns: v.array(
-            v.id('monetaryCampaigns')
-        ),
-
+        websiteURL: v.string(),
+        monetaryCampaigns: v.optional(v.array(
+            v.object({
+                goal: v.number(),
+                assignee: v.optional(v.string())
+            }),
+        )),
+        volunteerCampaigns: v.optional(v.array(
+            v.object({
+                need: v.string(),
+                assignee: v.optional(v.string())
+            })
+        ))
     })
 }
 
