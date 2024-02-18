@@ -128,7 +128,7 @@ const HomePage = () => {
 										<p style={{ color: 'black' }}>{item.description}</p>
 										<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px' }}>
 											<p style={{ ...getTypeStyles(item.goal.type), paddingLeft: '8px', paddingRight: '8px', borderRadius: '4px', marginRight: '8px' }}>{item.goal.type}</p>
-											<button style={{ backgroundColor: '#ff8947', border: 'none', padding: '8px 16px', borderRadius: '4px' }}>Learn More</button>
+											<button onClick={async() => {navigate((await getOrg({orgId: item.organizationID})).websiteURL)}}  style={{ backgroundColor: '#ff8947', border: 'none', padding: '8px 16px', borderRadius: '4px' }}>Learn More</button>
 										</div>
 									</div>
 								</InfoWindow>
