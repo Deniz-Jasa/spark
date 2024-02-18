@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 const urbanist = Urbanist({ subsets: ["latin"] });
 
 export const metadata = {
-	title: "Spark | Your Spark Can Create Change",
+	title: "Spark | Support Your Community",
 	description: "Made for TreeHacks 2024",
 };
 
@@ -38,6 +38,7 @@ export default function RootLayout({ children }) {
 										darkItemBg: "transparent",
 									},
 									Layout: {
+										siderWidth: 300,
 										siderBg: "#ff8947",
 									},
 								},

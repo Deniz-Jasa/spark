@@ -2,8 +2,9 @@
 
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Layout, theme } from "antd";
-import { DynamicHeader, DynamicSwitch } from "@/components/utils";
+import { SearchOutlined, CompassOutlined } from "@ant-design/icons";
+import { Layout, Menu, theme, Switch } from "antd";
+import { DynamicSwitch } from "@/components/utils";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -20,8 +21,6 @@ const DashboardLayout = ({ children }) => {
 				style={{
 					overflow: "auto",
 					height: "100vh",
-					width: "400px",
-					maxWidth: "400px",
 					position: "fixed",
 					left: 0,
 					bottom: 0, // Updated to bottom
@@ -36,7 +35,7 @@ const DashboardLayout = ({ children }) => {
 						}}
 					/>
 					<div style={{ marginLeft: "6px" }}>
-						<p>NPO View</p>
+						<p>Company View</p>
 					</div>
 				</div>
 			</Sider>
@@ -46,25 +45,20 @@ const DashboardLayout = ({ children }) => {
 					marginLeft: 200,
 					height: "100vh",
 				}}>
-				<DynamicHeader
-					pathName={pathName}
-					style={{
-						padding: 24,
-						background: colorBgContainer,
-						color: "black",
-					}}
-				/>
 				<Content
 					style={{
-						margin: "24px",
-						overflow: "hidden",
-						height: "80%",
-						padding: 24,
-						textAlign: "center",
-						background: colorBgContainer,
-						borderRadius: borderRadiusLG,
+						margin: "24px 16px 0",
+						overflow: "initial",
 					}}>
-					{children}
+					<div
+						style={{
+							padding: 24,
+							textAlign: "center",
+							background: colorBgContainer,
+							borderRadius: borderRadiusLG,
+						}}>
+						{children}
+					</div>
 				</Content>
 				<Footer
 					style={{
