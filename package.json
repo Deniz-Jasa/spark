@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.0",
+    "@react-google-maps/api": "^2.19.3",
     "antd": "^5.14.1",
     "convex": "^1.9.0",
     "next": "14.1.0",

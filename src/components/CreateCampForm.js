@@ -2,14 +2,29 @@ import React from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Form, Input, Button, DatePicker, Select } from "antd";
 
-const onFinish = (values) => {
-	console.log("Success:", values);
-};
+const selectTypes = [
+	{
+		key: 1,
+		value: "donation",
+		label: "Donation",
+	},
+	{
+		key: 2,
+		value: "volunteering",
+		label: "Volunteering",
+	},
+	{
+		key: 3,
+		value: "material",
+		label: "Material",
+	},
+];
+
 const onFinishFailed = (errorInfo) => {
 	console.log("Failed:", errorInfo);
 };
 
-const CreateCampForm = () => {
+const CreateCampForm = ({ onFinish }) => {
 	return (
 		<Form
 			name="basic"
@@ -26,7 +41,7 @@ const CreateCampForm = () => {
 			onFinishFailed={onFinishFailed}>
 			<Form.Item
 				label="Title"
-                name="title"
+				name="campaignTitle"
 				rules={[
 					{
 						required: true,
@@ -37,7 +52,7 @@ const CreateCampForm = () => {
 			</Form.Item>
 			<Form.Item
 				label="Description"
-                name="bio"
+				name="description"
 				rules={[
 					{
 						required: true,
@@ -48,25 +63,39 @@ const CreateCampForm = () => {
 			</Form.Item>
 			<Form.Item
 				label="Campaign Type"
-                name="type"
+				name="type"
 				rules={[
 					{
-						required: true,
+						required: false,
 						message: "Please input a website or social media link!",
 					},
 				]}>
-				<Select />
+				<Select style={{ width: 200 }} options={selectTypes} />
 			</Form.Item>
 			<Form.Item
 				label="Date"
-				name="date"
+				name="goalDate"
 				rules={[
 					{
 						required: true,
 						message: "Please input a date!",
 					},
 				]}>
-					<DatePicker />
+				<DatePicker />
+			</Form.Item>
+			<Form.Item
+				label="Goal Amount"
+				name="goalAmount"
+				rules={[
+					{
+						required: true,
+						message: "Please input a goal amount!",
+					},
+				]}>
+				<Input />
+			</Form.Item>
+			<Form.Item label="Location" name="location">
+				<Input />
 			</Form.Item>
 			<Button justify="flex-end" type="primary" htmlType="submit">
 				Submit

@@ -2,14 +2,11 @@ import React from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Form, Input, Button, Space } from "antd";
 
-const onFinish = (values) => {
-	console.log("Success:", values);
-};
 const onFinishFailed = (errorInfo) => {
 	console.log("Failed:", errorInfo);
 };
 
-const CreateOrgForm = () => {
+const CreateOrgForm = ({onFinish}) => {
 	return (
 		<Form
 			display="flex"
@@ -48,8 +45,19 @@ const CreateOrgForm = () => {
 				<Input.TextArea rows={4} />
 			</Form.Item>
 			<Form.Item
+				label="Location"
+				name="location"
+				rules={[
+					{
+						required: true,
+						message: "Please input your organization location!",
+					},
+				]}>
+				<Input />
+			</Form.Item>
+			<Form.Item
 				label="Website URL"
-				name="url"
+				name="websiteURL"
 				rules={[
 					{
 						required: true,
