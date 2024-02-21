@@ -27,15 +27,8 @@ const DashboardLayout = ({ children }) => {
 					left: 0,
 					bottom: 0, // Updated to bottom
 				}}>
-				<div style={{ marginTop: "10%" }}>
-					<DynamicSwitch
-						pathName={pathName}
-						redirect={(path) => {
-							router.push(path);
-						}}
-					/>
-					<p>Company View</p>
-				</div>
+				<Image src={logo} width={100} height={100} />
+
 				<Menu
 					mode="inline"
 					defaultSelectedKeys={["1"]}
@@ -52,10 +45,18 @@ const DashboardLayout = ({ children }) => {
 						{ key: "3", label: "My Contributions" },
 					]}
 				/>
-				<div style={{ marginTop: "150%" }}>
+				<div style={{ marginTop: "140%" }}>
 					<h1 style={{ fontSize: "2em" }}>100</h1>
 					<h1>Spark Points</h1>
-					<Image src={logo} width={100} height={100} />
+				</div>
+				<div style={{ marginTop: "15%" }}>
+					<DynamicSwitch
+						pathName={pathName}
+						redirect={(path) => {
+							router.push(path);
+						}}
+					/>
+					<p style={{ marginTop: 10 }}>Company View</p>
 				</div>
 			</Sider>
 
